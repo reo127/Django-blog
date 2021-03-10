@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Home Page{% endblock title %}
+{% block css %}
+
+{% endblock %}
+
+{% block home %}active{% endblock home %}
+
+{% block body %}
+<div class="container my-3">
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to iCoder</h1>
+        <p class="lead">If you want to learn how to code, taking your first steps into this huge universe might seem like a daunting, if not intimidating task. Here’s the big secret: There are plenty of free (and inexpensive) resources you can use to give yourself all the help you need, teach yourself new techniques, and make this learning process fun and exciting—as exciting as coding can get, at least.</p>
+        <hr class="my-4">
+        <p>This is the place of self tuch Programmer</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="http://127.0.0.1:8000/blog/" role="button">Our Blog</a>
+        </p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="py-5 text-center">
+
+        <h2>Checkout Our Bolg Posts</h2>
+        <p class="lead">We are sure you will love it</p>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Popular blogpost</h2>
+    {% for post in popular %}
+        {% if post.views > 6 %}
+            <div class="card flex-md-row my-4 box-shadow h-md-250">
+                <div class="card-body d-flex flex-column align-items-start">
+                    <strong class="d-inline-block mb-2 text-primary">Artical by {{post.auther}}</strong>
+                    <h3 class="mb-0">
+                        <a class="text-dark" href="/blog/{{post.slug}}">{{post.title|truncatechars:200}}</a>
+                    </h3>
+                    <div class="mb-1 text-muted">{{post.timeStamp}}</div>
+                    <p class="card-text mb-auto">{{post.contect}}</p>
+                     <a href="/blog/{{post.slug}}" role="button" class="btn btn-primary my-1">Continue reading</a>
+                    {% comment %} <button class="btn btn-primary my-2">Contine Reading</button> {% endcomment %}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock body %}

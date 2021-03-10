@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog Home{% endblock title %}
+    {% block js %}
+
+    {% endblock js %}
+
+
+{% block blog %}active{% endblock blog %}
+{% block body %}
+
+<div class="container my-4">
+  <h2>Coding articals by iCoder</h2>
+  {% for post in allPost %}
+    <div class="card flex-md-row my-4 box-shadow h-md-250">
+      <div class="card-body d-flex flex-column align-items-start">
+        <a href="/blog/{{post.slug}}"><strong class="d-inline-block mb-2 text-primary">Artical by {{post.auther}} ({{post.views}} views)</strong></a>
+        <h3 class="mb-0">
+          <a class="text-dark" href="/blog/{{post.slug}}">{{post.title}}</a>
+        </h3>
+        <div class="mb-1 text-muted">{{post.datetime}}</div>
+        <p class="card-text mb-auto"><div class="preview">{{post.contect|safe| truncatechars:500}}</div></p>
+        <a href="/blog/{{post.slug}}" role="button" class="btn btn-primary my-1">Continue reading</a>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+
+{% endblock body %}

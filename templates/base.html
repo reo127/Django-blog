@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>{% block title %}{% endblock title %}</title>
+
+    <style>
+    {% block css %}
+
+    {% endblock css %}
+    </style>
+    
+</head>
+
+<body>
+    <!-- navber -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">icoder</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item {% block home %}{% endblock home %}">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item {% block blog %}{% endblock blog %}">
+                    <a class="nav-link" href="http://127.0.0.1:8000/blog/">blog</a>
+                </li>
+                <li class="nav-item {% block about %}{% endblock about %}">
+                    <a class="nav-link" href="http://127.0.0.1:8000/about">about</a>
+                </li>
+                <li class="nav-item {% block contact %}{% endblock contact %}">
+                    <a class="nav-link" href="contact">contact</a>
+                </li>
+            </ul>
+            <form method="get" action="search" class="form-inline my-2 my-lg-0 mx-3">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" name="query" id="query"
+                    aria-label="Search">
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+               
+            </form>
+    <!-- Button trigger to signUp modal -->
+    {% if user.is_authenticated %}
+    
+    {% comment %}  {% endcomment %}
+
+    <ul class="navbar-nav mr-2">
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Whelcome {{request.user}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="logout">Logout</a>
+        </div>
+      </li>
+    </ul>
+
+
+    {% comment %}  {% endcomment %}
+
+    {% comment %} user Login as {{request.user}} {% endcomment %}
+    {% else %}
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sinUpmodal">signup</button>
+        </div>
+            <!-- Button trigger to Login modal -->
+    <button type="button" class="btn btn-primary mx-2" data-toggle="modal" data-target="#loginmodal">login</button>
+        </div>
+    {% endif %}
+        
+    </nav>
+
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        <strong>Massage : </strong> {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+
+
+
+    <!-- signup Modal -->
+    <div class="modal fade" id="sinUpmodal" tabindex="-1" role="dialog" aria-labelledby="sinUpmodal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sinUpmodal">SignUp Here</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form action="signup" method="POST">
+                    {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" name="username"
+                                placeholder="Lowercase & Alfanumarick" Required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fname">First name</label>
+                            <input type="text" class="form-control" id="fname" name="fname"
+                                placeholder="First name" Required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lname">Last name</label>
+                            <input type="text" class="form-control" id="lname" name="lname"
+                                placeholder="Last name" Required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="Enter your Email" Required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass1">Password</label>
+                            <input type="password" class="form-control" id="pass1" name="pass1"
+                                placeholder="Enter your Password" Required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass2">Cornfirm password</label>
+                            <input type="password" class="form-control" id="pass2" name="pass2"
+                                placeholder="Enter your Password Again" Required>
+                        </div>
+                        
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">SignUp</button>
+                </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+        <!-- Login Modal -->
+    <div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="loginmodal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="Loginmodaltitle">Login Here</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form action="login" method="POST">
+                    {% csrf_token %}
+                        <div class="form-group">
+                            <label for="loginusername">Username</label>
+                            <input type="text" class="form-control" id="loginusername" name="loginusername"
+                                placeholder="Usernmae">
+                        </div>                       
+                        <div class="form-group">
+                            <label for="pass">Password</label>
+                            <input type="password" class="form-control" id="loginpass" name="loginpassword"
+                                placeholder="Enter your Password">
+                        </div>
+                        
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    {% block body %}{% endblock body %}
+
+
+
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">© 2020-2021 Rohan Malo </p>
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="home">Home</a></li>
+            <li class="list-inline-item"><a href="about">About</a></li>
+            <li class="list-inline-item"><a href="contact">Contact</a></li>
+        </ul>
+    </footer>
+
+    {% block js %}
+    
+    {% endblock js %}
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+        
+</body>
+
+</html>
